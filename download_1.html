@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Download — lily & Diary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fdf9f5;
+  --bg2: #f5efe8;
+  --bg3: #ede4d9;
+  --text: #1c1814;
+  --text2: #6b5f52;
+  --text3: #a8998c;
+  --accent: #c97d5e;
+  --accent2: #e8b89a;
+  --lily: #d4a0c0;
+  --lily2: #f0d0e0;
+  --border: rgba(100,80,60,0.13);
+  --border2: rgba(100,80,60,0.25);
+  --shadow: 0 8px 40px rgba(100,70,50,0.12);
+  --shadow2: 0 2px 16px rgba(100,70,50,0.08);
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── PETALS BG ── */
+.bg-petals {
+  position: fixed; inset: 0; pointer-events: none;
+  overflow: hidden; opacity: 0.10; z-index: 0;
+}
+.petal {
+  position: absolute; font-size: 22px;
+  animation: drift linear infinite;
+}
+@keyframes drift {
+  0%   { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 0.5; }
+  100% { transform: translateY(105vh) rotate(400deg); opacity: 0; }
+}
+
+/* ── LAYOUT ── */
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 560px; margin: 0 auto;
+  padding: 4rem 1.5rem 5rem;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* ── HEADER ── */
+.site-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-style: italic; font-weight: 400;
+  letter-spacing: 0.18em; color: var(--text3);
+  text-transform: uppercase; margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.2s;
+}
+.site-mark span { color: var(--accent); }
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-weight: 300; font-style: italic;
+  color: var(--text); text-align: center; line-height: 1.15;
+  margin-bottom: 0.6rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.4s;
+}
+.hero-sub {
+  font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text3); text-align: center; margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.6s;
+}
+
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 3.5rem; width: 100%;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.7s;
+}
+.divider-line { flex: 1; height: 0.5px; background: var(--lily); }
+.divider-dot { font-size: 14px; }
+
+/* ── APP CARDS ── */
+.cards { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+
+.app-card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem 2rem 1.75rem;
+  position: relative; overflow: hidden;
+  opacity: 0; animation: fadeUp 1s ease forwards;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.app-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.app-card:nth-child(1) { animation-delay: 0.85s; }
+.app-card:nth-child(2) { animation-delay: 1.05s; }
+
+/* Accent stripe */
+.app-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 20px 20px 0 0;
+}
+.app-card.lily-card::before  { background: linear-gradient(90deg, var(--lily), var(--accent2)); }
+.app-card.diary-card::before { background: linear-gradient(90deg, var(--accent), #c9a06e); }
+
+.card-top {
+  display: flex; align-items: flex-start;
+  gap: 1rem; margin-bottom: 1.25rem;
+}
+.app-icon {
+  width: 60px; height: 60px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+  box-shadow: var(--shadow2);
+}
+.lily-card  .app-icon { background: linear-gradient(135deg, var(--lily2), var(--lily)); }
+.diary-card .app-icon { background: linear-gradient(135deg, #f5e8d8, var(--accent2)); }
+
+.app-meta { flex: 1; }
+.app-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-style: italic; font-weight: 400;
+  color: var(--text); line-height: 1; margin-bottom: 4px;
+}
+.app-tagline {
+  font-size: 12px; color: var(--text3);
+  letter-spacing: 0.05em; line-height: 1.5;
+}
+.app-version {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text3); margin-top: 4px;
+}
+
+.app-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-style: italic; line-height: 1.75;
+  color: var(--text2); margin-bottom: 1.5rem;
+  border-left: 2px solid var(--border2);
+  padding-left: 1rem;
+}
+
+.app-badges {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.badge {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text3); background: var(--bg3);
+  border: 0.5px solid var(--border);
+  border-radius: 20px; padding: 4px 10px;
+}
+
+.download-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%;
+  font-family: 'Jost', sans-serif; font-size: 12px;
+  font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #fff; text-decoration: none;
+  border-radius: 14px; padding: 14px 20px;
+  transition: all 0.22s; cursor: pointer; border: none;
+}
+.lily-card  .download-btn { background: linear-gradient(135deg, var(--lily), #c080a8); }
+.diary-card .download-btn { background: linear-gradient(135deg, var(--accent), #b06a4a); }
+
+.lily-card  .download-btn:hover { background: linear-gradient(135deg, #c080a8, #a86090); box-shadow: 0 4px 20px rgba(212,160,192,0.45); }
+.diary-card .download-btn:hover { background: linear-gradient(135deg, #b86c4e, #9a5c3e); box-shadow: 0 4px 20px rgba(201,125,94,0.45); }
+
+.download-btn svg {
+  width: 16px; height: 16px; flex-shrink: 0;
+}
+
+/* ── INSTALL STEPS ── */
+.install-steps {
+  margin-top: 1.25rem;
+  background: var(--bg3);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  border: 0.5px solid var(--border);
+}
+.install-steps-title {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 0.75rem; font-weight: 400;
+}
+.install-step {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 0.55rem;
+}
+.install-step:last-child { margin-bottom: 0; }
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-style: italic; font-weight: 500;
+  min-width: 18px; color: var(--accent);
+  line-height: 1.5;
+}
+.lily-card  .step-num { color: var(--lily); }
+.step-text {
+  font-size: 12px; color: var(--text2); line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+.step-text strong {
+  font-weight: 500; color: var(--text);
+}
+
+/* ── FOOTER ── */
+.footer-note {
+  margin-top: 3.5rem; text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px; font-style: italic; color: var(--text3);
+  line-height: 1.8;
+  opacity: 0; animation: fadeUp 1s ease forwards 1.4s;
+}
+.footer-note small {
+  display: block; margin-top: 0.5rem;
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  font-style: normal; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text3); opacity: 0.6;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 480px) {
+  .wrap { padding: 3rem 1.1rem 4rem; }
+  .hero-title { font-size: 38px; }
+  .app-card { padding: 1.6rem 1.4rem 1.5rem; }
+  .app-name { font-size: 22px; }
+  .app-icon { width: 52px; height: 52px; font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Floating petals -->
+<div class="bg-petals" id="petals"></div>
+
+<div class="wrap">
+
+  <p class="site-mark"><span>✿</span> &nbsp;Yashashree</p>
+
+  <h1 class="hero-title">Download the apps</h1>
+  <p class="hero-sub">two quiet little things, made for you</p>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-dot">🌸</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="cards">
+
+    <!-- LILY APP -->
+    <div class="app-card lily-card">
+      <div class="card-top">
+        <div class="app-icon">🌸</div>
+        <div class="app-meta">
+          <div class="app-name">lily</div>
+          <div class="app-tagline">your quiet world, always with you</div>
+          <div class="app-version">version 1.0 &nbsp;·&nbsp; android</div>
+        </div>
+      </div>
+      <p class="app-desc">Everything from this space — your memories, moods, wishes — right in your pocket. Open it whenever you need somewhere soft to land.</p>
+      <div class="app-badges">
+        <span class="badge">Free</span>
+        <span class="badge">Android APK</span>
+        <span class="badge">v1.0</span>
+      </div>
+      <a href="lily_1_0.zip" download="lily_1_0.zip" class="download-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download lily
+      </a>
+      <div class="install-steps">
+        <div class="install-steps-title">How to install</div>
+        <div class="install-step">
+          <span class="step-num">1.</span>
+          <span class="step-text">After downloading, open <strong>Files</strong> or <strong>My Files</strong> on your phone and go to your <strong>Downloads</strong> folder.</span>
+        </div>
+        <div class="install-step">
+          <span class="step-num">2.</span>
+          <span class="step-text">Tap on <strong>lily_1_0.zip</strong> and choose <strong>Extract</strong> (or "Unzip") to unpack the file.</span>
+        </div>
+        <div class="install-step">
+          <span class="step-num">3.</span>
+          <span class="step-text">Open the extracted folder and tap <strong>app-release.apk</strong> to begin installing.</span>
+        </div>
+        <div class="install-step">
+          <span class="step-num">4.</span>
+          <span class="step-text">If prompted, allow <strong>Install from unknown sources</strong> in your settings, then tap Install.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIARY APP -->
+    <div class="app-card diary-card">
+      <div class="card-top">
+        <div class="app-icon">📖</div>
+        <div class="app-meta">
+          <div class="app-name">Diary</div>
+          <div class="app-tagline">a private place to write it all down</div>
+          <div class="app-version">version 1.0 &nbsp;·&nbsp; android</div>
+        </div>
+      </div>
+      <p class="app-desc">A diary that belongs only to you. Write the things you can't say out loud — your days, your feelings, the little details you don't want to forget.</p>
+      <div class="app-badges">
+        <span class="badge">Free</span>
+        <span class="badge">Android APK</span>
+        <span class="badge">v1.0</span>
+      </div>
+      <a href="Diary_1_0.zip" download="Diary_1_0.zip" class="download-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download Diary
+      </a>
+      <div class="install-steps">
+        <div class="install-steps-title">How to install</div>
+        <div class="install-step">
+          <span class="step-num">1.</span>
+          <span class="step-text">After downloading, open <strong>Files</strong> or <strong>My Files</strong> on your phone and go to your <strong>Downloads</strong> folder.</span>
+        </div>
+        <div class="install-step">
+          <span class="step-num">2.</span>
+          <span class="step-text">Tap on <strong>Diary_1_0.zip</strong> and choose <strong>Extract</strong> (or "Unzip") to unpack the file.</span>
+        </div>
+        <div class="install-step">
+          <span class="step-num">3.</span>
+          <span class="step-text">Open the extracted folder and tap <strong>app-release.apk</strong> to begin installing.</span>
+        </div>
+        <div class="install-step">
+          <span class="step-num">4.</span>
+          <span class="step-text">If prompted, allow <strong>Install from unknown sources</strong> in your settings, then tap Install.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="footer-note">
+    These are zipped Android APK files.<br>
+    Extract the ZIP and open <em>app-release.apk</em> to install.
+    <small>you may need to allow "install from unknown sources" in your settings</small>
+  </p>
+
+</div>
+
+<script>
+// Spawn petals
+const emojis = ['🌸','🌷','✿','🌺','💮'];
+const container = document.getElementById('petals');
+for (let i = 0; i < 14; i++) {
+  const el = document.createElement('div');
+  el.className = 'petal';
+  el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.animationDuration = (12 + Math.random() * 16) + 's';
+  el.style.animationDelay = (Math.random() * 14) + 's';
+  el.style.fontSize = (16 + Math.random() * 14) + 'px';
+  container.appendChild(el);
+}
+</script>
+</body>
+</html>
